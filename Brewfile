@@ -8,6 +8,8 @@ tap 'homebrew/cask'
 tap 'johanhaleby/kubetail'
 tap 'ksonnet/tap'
 
+cask 'adoptopenjdk'
+cask 'adoptopenjdk8'
 cask 'bettertouchtool'
 cask 'burp-suite'
 cask 'copyclip'
