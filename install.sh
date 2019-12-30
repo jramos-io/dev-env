@@ -15,20 +15,25 @@ if [[ $REPLY =~ ^[Yy] ]]; then
   $DEBUG mkdir -p $HOME/bin $HOME/.ssh
   $DEBUG chmod 700 $HOME/.ssh
 
-  read -p 'Install dotfile symlinks? (y/N) '
+  read -p 'Add dotfile symlinks? (y/N) '
   if [[ $REPLY =~ ^[Yy] ]]; then
     for FILE in $(find $DIR/dotfiles -type f); do
-      FILE_PATH=${FILE#"${DIR}/dotfiles"/}
-      [ -f $HOME/$FILE_PATH ] && \
-        $DEBUG mv -f $HOME/$FILE_PATH $HOME/$FILE_PATH.bak-$(date +%Y-%m-%d)
-      $DEBUG ln -s $FILE $HOME/$FILE_PATH
+      FILE_PATH="${HOME}/${FILE#"${DIR}/dotfiles"/}"
+      [ -f $FILE_PATH ] && \
+        $DEBUG mv -f $FILE_PATH $FILE_PATH.bak-$(date +%Y-%m-%d)
+      $DEBUG ln -s $FILE $FILE_PATH
     done
   fi
 fi
 
-read -p 'Add /etc files? (y/N) '
+read -p 'Add /etc symlinks? (y/N) '
 if [[ $REPLY =~ ^[Yy] ]]; then
-  $DEBUG sudo cp -rf $DIR/etc/* /etc/
+  for FILE in $(find $DIR/etc -type f); do
+    FILE_PATH="/${FILE#"${DIR}"/}"
+    [ -f $FILE_PATH ] && \
+      $DEBUG sudo mv -f $FILE_PATH $FILE_PATH.bak-$(date +%Y-%m-%d)
+    $DEBUG sudo ln -s $FILE $FILE_PATH
+  done
 fi
 
 read -p 'Install homebrew and packages? (y/N) '
