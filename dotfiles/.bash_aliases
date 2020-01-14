@@ -35,6 +35,8 @@ alias ys="yarn start"
 alias yt="yarn test" 
 alias yui="yarn upgrade-interactive"
 
+alias cerebro="(\$(sleep 3; open http://localhost:9000) &) && \$(which cerebro)"
+
 alias disable-tm-local="sudo tmutil disablelocal"
 alias dns-flush="dscacheutil -flushcache && sudo killall -HUP mDNSResponder"
 alias generate-mac="openssl rand -hex 6 | sed 's/\(..\)/\1:/g; s/:$//' | tr a-f A-F"
